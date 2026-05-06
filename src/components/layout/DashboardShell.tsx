@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -16,7 +16,12 @@ import {
   Menu } from
 'lucide-react';
 import { Logo } from '../common/Logo';
-import { signOut } from '../../lib/auth';
+import {
+  EditableProfile,
+  fallbackAvatarUrl,
+  getEditableProfile,
+  signOut
+} from '../../lib/auth';
 interface DashboardShellProps {
   role: 'host' | 'admin' | 'support' | 'finance';
 }
@@ -25,6 +30,7 @@ export function DashboardShell({ role }: DashboardShellProps) {
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [profile, setProfile] = useState<EditableProfile | null>(null);
   const hostNav = [
   {
     icon: LayoutDashboard,
@@ -108,6 +114,28 @@ export function DashboardShell({ role }: DashboardShellProps) {
     await signOut();
     navigate('/auth/role', { replace: true });
   };
+
+  useEffect(() => {
+    let isMounted = true;
+
+    getEditableProfile()
+      .then((nextProfile) => {
+        if (!isMounted) return;
+        setProfile(nextProfile);
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        setProfile(null);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const displayName = profile?.name || 'Kagie User';
+  const avatarUrl = profile?.avatar_url || fallbackAvatarUrl;
+
   return (
     <div className="min-h-screen bg-background lg:flex">
       {isMobileNavOpen &&
@@ -202,13 +230,16 @@ export function DashboardShell({ role }: DashboardShellProps) {
             <div className="flex items-center gap-3 pl-2 sm:pl-4 border-l border-border">
               <div className="text-right hidden sm:block">
                 <div className="text-sm font-semibold text-dark">
-                  Sarah Jenkins
+                  {displayName}
                 </div>
                 <div className="text-xs text-gray-500 capitalize">{role}</div>
               </div>
               <img
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt="Profile"
+                src={avatarUrl}
+                alt={displayName}
+                onError={(e) => {
+                  e.currentTarget.src = fallbackAvatarUrl;
+                }}
                 className="w-10 h-10 rounded-full border-2 border-white shadow-sm" />
               
             </div>

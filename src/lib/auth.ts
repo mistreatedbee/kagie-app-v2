@@ -5,6 +5,19 @@ export type KagieRole = 'student' | 'host' | 'admin';
 
 const PENDING_OAUTH_ROLE_KEY = 'kagie.pendingOAuthRole';
 const SIGNUP_ROLE_PREFIX = 'kagie.signupRole.';
+export const fallbackAvatarUrl =
+  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80';
+
+export interface EditableProfile {
+  name: string;
+  institution: string;
+  phone: string;
+  avatar_url: string;
+  role: KagieRole | null;
+  email: string;
+  emailVerified: boolean;
+  rawProfile: Record<string, unknown>;
+}
 
 export const roleLandingPaths: Record<KagieRole, string> = {
   student: '/home',
@@ -68,6 +81,66 @@ const takePendingOAuthRole = () => {
 export const getProfileRole = (profile: Record<string, unknown> | null | undefined) => {
   const role = profile?.role;
   return isKagieRole(role) ? role : null;
+};
+
+const readStringField = (
+  profile: Record<string, unknown> | null | undefined,
+  field: string,
+  fallback = ''
+) => {
+  const value = profile?.[field];
+  return typeof value === 'string' && value.trim() ? value : fallback;
+};
+
+export const normalizeEditableProfile = (user: UserSchema): EditableProfile => {
+  const profile = (user.profile || {}) as Record<string, unknown>;
+
+  return {
+    name: readStringField(profile, 'name', user.email.split('@')[0] || 'Kagie User'),
+    institution: readStringField(profile, 'institution'),
+    phone: readStringField(profile, 'phone'),
+    avatar_url: readStringField(profile, 'avatar_url', fallbackAvatarUrl),
+    role: getProfileRole(profile),
+    email: user.email,
+    emailVerified: user.emailVerified,
+    rawProfile: profile
+  };
+};
+
+export const getEditableProfile = async () => {
+  const { data, error } = await insforge.auth.getCurrentUser();
+
+  if (error) throw error;
+  if (!data.user) throw new Error('You need to sign in to edit your profile.');
+
+  return normalizeEditableProfile(data.user);
+};
+
+export const updateEditableProfile = async (
+  currentProfile: EditableProfile,
+  updates: Pick<EditableProfile, 'name' | 'institution' | 'phone' | 'avatar_url'>
+) => {
+  const nextProfile = {
+    ...currentProfile.rawProfile,
+    name: updates.name.trim(),
+    institution: updates.institution.trim(),
+    phone: updates.phone.trim(),
+    avatar_url: updates.avatar_url.trim(),
+    ...(currentProfile.role ? { role: currentProfile.role } : {})
+  };
+
+  const { data, error } = await insforge.auth.setProfile(nextProfile);
+  if (error) throw error;
+
+  return {
+    ...currentProfile,
+    ...updates,
+    name: updates.name.trim(),
+    institution: updates.institution.trim(),
+    phone: updates.phone.trim(),
+    avatar_url: updates.avatar_url.trim() || fallbackAvatarUrl,
+    rawProfile: (data?.profile || nextProfile) as Record<string, unknown>
+  };
 };
 
 export const ensureProfileRole = async (
