@@ -34,7 +34,8 @@ export function Home() {
   return (
     <div className="min-h-screen bg-background pb-6">
       {/* Header Section */}
-      <div className="bg-white px-6 pt-12 pb-6 rounded-b-[2.5rem] shadow-sm relative z-10">
+      <div className="bg-white px-4 pt-10 pb-6 shadow-sm relative z-10 sm:px-6 sm:pt-12 lg:rounded-b-[2.5rem]">
+        <div className="mx-auto max-w-7xl">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-3">
             <img
@@ -80,9 +81,10 @@ export function Home() {
             </button>
           </div>
         </div>
+        </div>
       </div>
 
-      <div className="px-6 mt-6 space-y-8">
+      <div className="mx-auto max-w-7xl px-4 mt-6 space-y-8 sm:px-6 lg:px-8">
         {/* Active Booking Card */}
         {mockUser.activeBooking &&
         <motion.div
@@ -135,7 +137,7 @@ export function Home() {
 
         {/* Quick Filters */}
         <div>
-          <div className="flex gap-3 overflow-x-auto hide-scrollbar pb-2 -mx-6 px-6">
+          <div className="flex gap-3 overflow-x-auto hide-scrollbar pb-2 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:flex-wrap lg:px-0">
             {quickFilters.map((filter, index) =>
             <button
               key={index}
@@ -167,9 +169,9 @@ export function Home() {
             </button>
           </div>
 
-          <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-4 -mx-6 px-6 snap-x">
+          <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-4 -mx-4 px-4 snap-x sm:-mx-6 sm:px-6 md:grid md:grid-cols-2 md:overflow-visible md:pb-0 lg:mx-0 lg:grid-cols-3 lg:px-0 xl:grid-cols-4">
             {mockListings.map((listing) =>
-            <div key={listing.id} className="w-[280px] shrink-0 snap-center">
+            <div key={listing.id} className="w-[280px] shrink-0 snap-center md:w-auto">
                 <ListingCard listing={listing} />
               </div>
             )}
@@ -181,7 +183,7 @@ export function Home() {
           <h2 className="font-display font-bold text-xl text-dark mb-4">
             Nearby Campus
           </h2>
-          <div className="space-y-4">
+          <div className="grid gap-4 lg:grid-cols-2">
             {mockListings.slice(0, 3).map((listing) =>
             <ListingCard
               key={listing.id}

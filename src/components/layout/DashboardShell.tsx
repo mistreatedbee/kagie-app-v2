@@ -22,6 +22,7 @@ export function DashboardShell({ role }: DashboardShellProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const hostNav = [
   {
     icon: LayoutDashboard,
@@ -97,11 +98,21 @@ export function DashboardShell({ role }: DashboardShellProps) {
   }];
 
   const navItems = role === 'host' ? hostNav : adminNav;
+  const handleNavigate = (path: string) => {
+    navigate(path);
+    setIsMobileNavOpen(false);
+  };
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen bg-background lg:flex">
+      {isMobileNavOpen &&
+      <button
+        aria-label="Close navigation"
+        onClick={() => setIsMobileNavOpen(false)}
+        className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden" />
+      }
       {/* Sidebar */}
       <aside
-        className={`bg-white border-r border-border transition-all duration-300 flex flex-col ${isSidebarOpen ? 'w-64' : 'w-20'}`}>
+        className={`fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] bg-white border-r border-border transition-transform duration-300 flex flex-col lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 lg:transition-all ${isMobileNavOpen ? 'translate-x-0' : '-translate-x-full'} ${isSidebarOpen ? 'lg:w-64' : 'lg:w-20'}`}>
         
         <div className="h-16 flex items-center px-6 border-b border-border">
           <div className="flex items-center gap-2 text-primary font-display font-bold text-xl">
@@ -125,7 +136,7 @@ export function DashboardShell({ role }: DashboardShellProps) {
             return (
               <button
                 key={item.path}
-                onClick={() => navigate(item.path)}
+                onClick={() => handleNavigate(item.path)}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors ${isActive ? 'bg-primary/10 text-primary font-medium' : 'text-gray-600 hover:bg-gray-50'}`}>
                 
                 <Icon
@@ -147,12 +158,18 @@ export function DashboardShell({ role }: DashboardShellProps) {
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex min-h-screen flex-1 flex-col min-w-0">
         {/* Topbar */}
-        <header className="h-16 bg-white border-b border-border px-6 flex items-center justify-between sticky top-0 z-10">
-          <div className="flex items-center gap-4">
+        <header className="h-16 bg-white border-b border-border px-4 sm:px-6 flex items-center justify-between sticky top-0 z-30">
+          <div className="flex min-w-0 items-center gap-3 sm:gap-4">
             <button
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              onClick={() => {
+                if (window.innerWidth < 1024) {
+                  setIsMobileNavOpen(true);
+                } else {
+                  setIsSidebarOpen(!isSidebarOpen);
+                }
+              }}
               className="p-2 text-gray-500 hover:bg-gray-100 rounded-lg transition-colors">
               
               <Menu size={20} />
@@ -166,18 +183,18 @@ export function DashboardShell({ role }: DashboardShellProps) {
               <input
                 type="text"
                 placeholder="Search..."
-                className="pl-10 pr-4 py-2 bg-gray-50 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary w-64 transition-all" />
+                className="pl-10 pr-4 py-2 bg-gray-50 border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary w-48 xl:w-64 transition-all" />
               
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-4">
             <button className="relative p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors">
               <Bell size={20} />
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-primary rounded-full border-2 border-white"></span>
             </button>
 
-            <div className="flex items-center gap-3 pl-4 border-l border-border">
+            <div className="flex items-center gap-3 pl-2 sm:pl-4 border-l border-border">
               <div className="text-right hidden sm:block">
                 <div className="text-sm font-semibold text-dark">
                   Sarah Jenkins
@@ -194,7 +211,7 @@ export function DashboardShell({ role }: DashboardShellProps) {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto bg-background p-6">
+        <main className="flex-1 overflow-x-hidden bg-background p-4 sm:p-6">
           <Outlet />
         </main>
       </div>

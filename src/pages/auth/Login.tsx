@@ -22,7 +22,21 @@ export function Login() {
     }, 1000);
   };
   return (
-    <div className="min-h-screen bg-white flex flex-col px-6 py-8 max-w-md mx-auto">
+    <div className="min-h-screen bg-background px-4 py-6 sm:px-6 lg:flex lg:items-center lg:justify-center">
+      <div className="mx-auto flex min-h-[calc(100vh-3rem)] w-full max-w-md flex-col rounded-none bg-white px-2 py-2 sm:px-0 lg:min-h-0 lg:max-w-5xl lg:grid lg:grid-cols-[0.9fr_1.1fr] lg:overflow-hidden lg:rounded-3xl lg:border lg:border-border lg:p-0 lg:shadow-card">
+      <div className="hidden bg-primary p-10 text-white lg:flex lg:flex-col lg:justify-between">
+        <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-primary font-display font-bold text-2xl">
+          K
+        </div>
+        <div>
+          <h2 className="font-display text-3xl font-bold mb-3">Kagie Stay</h2>
+          <p className="text-white/80">
+            Find verified student accommodation and manage your stay from one
+            place.
+          </p>
+        </div>
+      </div>
+      <div className="flex min-h-[calc(100vh-3rem)] flex-col bg-white px-2 py-2 sm:px-0 lg:min-h-0 lg:px-10 lg:py-10">
       <button
         onClick={() => navigate(-1)}
         className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-dark hover:bg-gray-100 transition-colors mb-8">
@@ -144,6 +158,8 @@ export function Login() {
             Sign up
           </button>
         </p>
+      </div>
+      </div>
       </div>
     </div>);
 

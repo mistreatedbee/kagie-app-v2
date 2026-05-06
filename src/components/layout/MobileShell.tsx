@@ -37,17 +37,17 @@ export function MobileShell() {
   }];
 
   return (
-    <div className="min-h-screen bg-background flex justify-center">
-      <div className="w-full max-w-md bg-background min-h-screen relative shadow-2xl overflow-hidden flex flex-col">
+    <div className="min-h-screen bg-background">
+      <div className="w-full bg-background min-h-screen relative flex flex-col">
         {/* Main Content Area */}
-        <main className="flex-1 overflow-y-auto hide-scrollbar pb-24">
+        <main className="flex-1 min-w-0 pb-24 lg:pb-28">
           <Outlet />
         </main>
 
         {/* Bottom Navigation */}
         {!hideBottomNav &&
-        <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-border px-6 py-4 pb-safe rounded-t-3xl shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50">
-            <div className="flex justify-between items-center">
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-border px-3 sm:px-6 py-3 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50 lg:left-1/2 lg:right-auto lg:-translate-x-1/2 lg:bottom-6 lg:w-[min(720px,calc(100%-3rem))] lg:rounded-3xl lg:border lg:px-6">
+            <div className="mx-auto flex max-w-3xl justify-between items-center gap-1">
               {navItems.map((item) => {
               const isActive = location.pathname === item.path;
               const Icon = item.icon;
@@ -55,7 +55,7 @@ export function MobileShell() {
                 <button
                   key={item.path}
                   onClick={() => navigate(item.path)}
-                  className="flex flex-col items-center gap-1 relative">
+                  className="flex min-w-0 flex-1 flex-col items-center gap-1 relative rounded-2xl px-1 py-1 transition-colors hover:bg-gray-50 sm:px-2">
                   
                     <div
                     className={`p-2 rounded-xl transition-colors ${isActive ? 'text-primary' : 'text-gray-400 hover:text-gray-600'}`}>
@@ -69,7 +69,7 @@ export function MobileShell() {
                     }
                     </div>
                     <span
-                    className={`text-[10px] font-medium ${isActive ? 'text-primary' : 'text-gray-400'}`}>
+                    className={`max-w-full truncate text-[10px] font-medium sm:text-xs ${isActive ? 'text-primary' : 'text-gray-400'}`}>
                     
                       {item.label}
                     </span>

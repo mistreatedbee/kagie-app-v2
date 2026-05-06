@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import {
   ArrowLeft,
   Heart,
@@ -14,7 +13,6 @@ import {
   Car,
   BookOpen,
   Coffee,
-  ChevronRight,
   MessageSquare } from
 'lucide-react';
 import { mockListings } from '../../data/mockData';
@@ -23,7 +21,7 @@ export function ListingDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isSaved, setIsSaved] = useState(false);
-  const [activeImage, setActiveImage] = useState(0);
+  const [activeImage] = useState(0);
   // Find listing or use default
   const listing = mockListings.find((l) => l.id === id) || mockListings[0];
   const images = [
@@ -51,9 +49,10 @@ export function ListingDetail() {
     }
   };
   return (
-    <div className="min-h-screen bg-white pb-24">
+    <div className="min-h-screen bg-white pb-32 lg:bg-background">
+      <div className="lg:mx-auto lg:grid lg:max-w-7xl lg:grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)] lg:gap-6 lg:px-6 lg:py-6">
       {/* Image Gallery Header */}
-      <div className="relative h-[40vh] w-full bg-gray-100">
+      <div className="relative h-[40vh] w-full bg-gray-100 lg:sticky lg:top-6 lg:h-[calc(100vh-12rem)] lg:min-h-[520px] lg:overflow-hidden lg:rounded-3xl">
         <img
           src={images[activeImage]}
           alt={listing.name}
@@ -96,10 +95,10 @@ export function ListingDetail() {
       </div>
 
       {/* Content */}
-      <div className="px-6 pt-6 bg-white rounded-t-3xl -mt-6 relative z-20">
+      <div className="px-4 pt-6 bg-white rounded-t-3xl -mt-6 relative z-20 sm:px-6 lg:mt-0 lg:rounded-3xl lg:border lg:border-border lg:p-8 lg:shadow-sm">
         {/* Title & Rating */}
-        <div className="flex justify-between items-start mb-2">
-          <h1 className="font-display font-bold text-2xl text-dark leading-tight pr-4">
+        <div className="flex flex-col gap-3 mb-2 sm:flex-row sm:justify-between sm:items-start">
+          <h1 className="font-display font-bold text-2xl text-dark leading-tight sm:pr-4 lg:text-3xl">
             {listing.name}
           </h1>
           <div className="flex flex-col items-end shrink-0">
@@ -117,8 +116,8 @@ export function ListingDetail() {
         </div>
 
         {/* Location & Badges */}
-        <div className="flex items-center gap-1.5 text-gray-500 text-sm mb-4">
-          <MapPin size={16} className="text-primary" />
+        <div className="flex flex-wrap items-center gap-1.5 text-gray-500 text-sm mb-4">
+          <MapPin size={16} className="text-primary shrink-0" />
           <span>{listing.location}</span>
           <span className="mx-1">•</span>
           <span className="font-semibold text-dark">
@@ -126,7 +125,7 @@ export function ListingDetail() {
           </span>
         </div>
 
-        <div className="flex gap-2 mb-6">
+        <div className="flex flex-wrap gap-2 mb-6">
           {listing.host.verified &&
           <span className="flex items-center gap-1 bg-success/10 text-success px-2.5 py-1 rounded-lg text-xs font-bold">
               <ShieldCheck size={14} /> Verified Property
@@ -161,7 +160,7 @@ export function ListingDetail() {
           <h2 className="font-display font-bold text-lg text-dark mb-4">
             What this place offers
           </h2>
-          <div className="grid grid-cols-2 gap-y-4 gap-x-2">
+          <div className="grid grid-cols-1 gap-y-4 gap-x-2 sm:grid-cols-2">
             {listing.amenities.map((amenity: string) =>
             <div
               key={amenity}
@@ -186,7 +185,7 @@ export function ListingDetail() {
               Available Rooms
             </h2>
           </div>
-          <div className="bg-gray-50 rounded-2xl p-4 border border-border flex justify-between items-center">
+          <div className="bg-gray-50 rounded-2xl p-4 border border-border flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
             <div>
               <h3 className="font-bold text-dark mb-1">Standard Single Room</h3>
               <p className="text-sm text-gray-500">1 Bed • Shared Bathroom</p>
@@ -205,7 +204,7 @@ export function ListingDetail() {
           <h2 className="font-display font-bold text-lg text-dark mb-4">
             Meet your host
           </h2>
-          <div className="bg-white border border-border rounded-2xl p-4 shadow-sm flex items-center justify-between">
+          <div className="bg-white border border-border rounded-2xl p-4 shadow-sm flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-4">
               <div className="relative">
                 <img
@@ -232,10 +231,11 @@ export function ListingDetail() {
           </div>
         </div>
       </div>
+      </div>
 
       {/* Sticky Bottom Bar */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-border p-4 px-6 pb-safe z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
-        <div className="max-w-md mx-auto flex justify-between items-center">
+        <div className="mx-auto flex max-w-7xl justify-between items-center gap-4">
           <div>
             <p className="text-xs text-gray-500 font-medium mb-0.5">
               Price from

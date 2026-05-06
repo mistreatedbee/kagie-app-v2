@@ -48,7 +48,8 @@ export function Profile() {
   return (
     <div className="min-h-screen bg-background pb-6">
       {/* Header Profile Section */}
-      <div className="bg-white px-6 pt-12 pb-8 rounded-b-[2.5rem] shadow-sm relative z-10">
+      <div className="bg-white px-4 pt-10 pb-8 shadow-sm relative z-10 sm:px-6 sm:pt-12 lg:rounded-b-[2.5rem]">
+        <div className="mx-auto max-w-5xl">
         <div className="flex justify-between items-start mb-6">
           <h1 className="font-display font-bold text-2xl text-dark">Profile</h1>
           <button className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-dark hover:bg-gray-100 transition-colors">
@@ -56,7 +57,7 @@ export function Profile() {
           </button>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
           <div className="relative">
             <img
               src={mockUser.avatar}
@@ -77,11 +78,12 @@ export function Profile() {
             </span>
           </div>
         </div>
+        </div>
       </div>
 
-      <div className="px-6 mt-6 space-y-6">
+      <div className="mx-auto max-w-5xl px-4 mt-6 space-y-6 sm:px-6 lg:px-8">
         {/* Menu List */}
-        <div className="bg-white rounded-3xl p-2 shadow-sm border border-border">
+        <div className="bg-white rounded-3xl p-2 shadow-sm border border-border lg:grid lg:grid-cols-2 lg:gap-1">
           {menuItems.map((item, index) =>
           <button
             key={index}

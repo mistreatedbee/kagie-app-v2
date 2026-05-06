@@ -23,9 +23,9 @@ export function ListingCard({
           scale: 0.98
         }}
         onClick={() => navigate(`/listing/${listing.id}`)}
-        className="bg-white rounded-3xl p-3 flex gap-4 shadow-sm border border-border cursor-pointer">
+        className="bg-white rounded-3xl p-3 flex min-w-0 gap-3 sm:gap-4 shadow-sm border border-border cursor-pointer">
         
-        <div className="relative w-32 h-32 shrink-0 rounded-2xl overflow-hidden">
+        <div className="relative h-28 w-28 shrink-0 rounded-2xl overflow-hidden sm:h-36 sm:w-36 md:h-40 md:w-40">
           <img
             src={listing.image}
             alt={listing.name}
@@ -49,13 +49,13 @@ export function ListingCard({
           }
         </div>
 
-        <div className="flex-1 flex flex-col justify-between py-1">
+        <div className="flex-1 min-w-0 flex flex-col justify-between py-1">
           <div>
-            <div className="flex justify-between items-start mb-1">
-              <h3 className="font-bold text-dark text-base line-clamp-1">
+            <div className="flex justify-between items-start gap-2 mb-1">
+              <h3 className="font-bold text-dark text-sm line-clamp-2 sm:text-base">
                 {listing.name}
               </h3>
-              <div className="flex items-center gap-1 text-sm font-semibold">
+              <div className="flex shrink-0 items-center gap-1 text-sm font-semibold">
                 <Star
                   size={14}
                   className="fill-accent-yellow text-accent-yellow" />
@@ -63,11 +63,11 @@ export function ListingCard({
                 <span>{listing.rating}</span>
               </div>
             </div>
-            <div className="flex items-center gap-1 text-gray-500 text-xs mb-2">
-              <MapPin size={12} />
+            <div className="flex min-w-0 items-center gap-1 text-gray-500 text-xs mb-2">
+              <MapPin size={12} className="shrink-0" />
               <span className="line-clamp-1">{listing.location}</span>
               <span className="mx-1">•</span>
-              <span>{listing.distance}km</span>
+              <span className="shrink-0">{listing.distance}km</span>
             </div>
             <div className="flex flex-wrap gap-1">
               {listing.amenities.slice(0, 2).map((amenity: string) =>
@@ -86,9 +86,9 @@ export function ListingCard({
             </div>
           </div>
 
-          <div className="flex items-end justify-between mt-2">
+          <div className="flex flex-wrap items-end justify-between gap-2 mt-2">
             <div>
-              <span className="text-lg font-bold text-primary">
+              <span className="text-base font-bold text-primary sm:text-lg">
                 R{listing.price}
               </span>
               <span className="text-xs text-gray-500">/mo</span>
@@ -107,7 +107,7 @@ export function ListingCard({
         scale: 0.98
       }}
       onClick={() => navigate(`/listing/${listing.id}`)}
-      className="bg-white rounded-3xl overflow-hidden shadow-card border border-border cursor-pointer flex flex-col">
+      className="bg-white rounded-3xl overflow-hidden shadow-card border border-border cursor-pointer flex h-full min-w-0 flex-col">
       
       <div className="relative aspect-[4/3] w-full overflow-hidden">
         <img
@@ -139,19 +139,19 @@ export function ListingCard({
         </button>
       </div>
 
-      <div className="p-4 flex flex-col flex-1">
-        <div className="flex justify-between items-start mb-1">
-          <h3 className="font-bold text-dark text-lg line-clamp-1">
+      <div className="p-4 flex min-w-0 flex-col flex-1">
+        <div className="flex justify-between items-start gap-2 mb-1">
+          <h3 className="font-bold text-dark text-base line-clamp-2 sm:text-lg">
             {listing.name}
           </h3>
-          <div className="flex items-center gap-1 text-sm font-semibold bg-gray-50 px-1.5 py-0.5 rounded-md">
+          <div className="flex shrink-0 items-center gap-1 text-sm font-semibold bg-gray-50 px-1.5 py-0.5 rounded-md">
             <Star size={14} className="fill-accent-yellow text-accent-yellow" />
             <span>{listing.rating}</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-1 text-gray-500 text-sm mb-3">
-          <MapPin size={14} />
+        <div className="flex min-w-0 items-center gap-1 text-gray-500 text-sm mb-3">
+          <MapPin size={14} className="shrink-0" />
           <span className="line-clamp-1">{listing.location}</span>
           <span className="mx-1">•</span>
           <span className="shrink-0 font-medium text-dark">
@@ -159,12 +159,12 @@ export function ListingCard({
           </span>
         </div>
 
-        <div className="mt-auto pt-3 border-t border-border flex items-center justify-between">
-          <div>
-            <span className="text-xl font-display font-bold text-primary">
+        <div className="mt-auto pt-3 border-t border-border flex flex-wrap items-center justify-between gap-2">
+          <div className="min-w-0">
+            <span className="text-lg font-display font-bold text-primary sm:text-xl">
               R{listing.price}
             </span>
-            <span className="text-sm text-gray-500 font-medium"> / month</span>
+            <span className="text-xs text-gray-500 font-medium sm:text-sm"> / month</span>
           </div>
           <span className="text-xs font-semibold text-gray-600 bg-gray-100 px-2 py-1 rounded-lg">
             {listing.type}

@@ -14,11 +14,14 @@ import { FilterSheet } from '../../components/listings/FilterSheet';
 export function Listings() {
   const navigate = useNavigate();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>(() =>
+    typeof window !== 'undefined' && window.innerWidth >= 768 ? 'grid' : 'list'
+  );
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Sticky Header */}
-      <div className="bg-white px-6 pt-12 pb-4 sticky top-0 z-30 shadow-sm">
+      <div className="bg-white px-4 pt-10 pb-4 sticky top-0 z-30 shadow-sm sm:px-6 sm:pt-12">
+        <div className="mx-auto max-w-7xl">
         {/* Search Bar */}
         <div className="flex gap-3 mb-4">
           <div className="flex-1 bg-gray-50 border border-border rounded-2xl p-3 flex items-center gap-3">
@@ -64,13 +67,14 @@ export function Listings() {
             </button>
           </div>
         </div>
+        </div>
       </div>
 
       {/* Listings Content */}
-      <div className="flex-1 p-6 pt-4">
+      <div className="mx-auto w-full max-w-7xl flex-1 p-4 pt-4 sm:p-6 lg:px-8">
         <div
           className={
-          viewMode === 'grid' ? 'grid grid-cols-2 gap-4' : 'space-y-4'
+          viewMode === 'grid' ? 'grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3' : 'grid grid-cols-1 gap-4 lg:grid-cols-2'
           }>
           
           {mockListings.map((listing) =>
@@ -93,7 +97,7 @@ export function Listings() {
       {/* Floating Map Button */}
       <button
         onClick={() => navigate('/map')}
-        className="fixed bottom-24 left-1/2 -translate-x-1/2 bg-dark text-white px-6 py-3 rounded-full font-semibold shadow-lg shadow-dark/20 flex items-center gap-2 hover:bg-dark/90 transition-colors z-20">
+        className="fixed bottom-24 left-1/2 -translate-x-1/2 bg-dark text-white px-6 py-3 rounded-full font-semibold shadow-lg shadow-dark/20 flex items-center gap-2 hover:bg-dark/90 transition-colors z-20 lg:bottom-28">
         
         <Map size={18} />
         Map View

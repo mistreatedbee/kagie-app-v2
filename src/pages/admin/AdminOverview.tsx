@@ -4,7 +4,6 @@ import {
   Building2,
   CreditCard,
   AlertTriangle,
-  TrendingUp,
   ShieldCheck,
   ArrowUpRight,
   ArrowDownRight,
@@ -74,14 +73,14 @@ const userDistribution = [
 export function AdminOverview() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col gap-4 lg:flex-row lg:justify-between lg:items-end">
         <div>
           <h1 className="font-display font-bold text-2xl text-dark">
             Platform Overview
           </h1>
           <p className="text-gray-500">System metrics and platform health.</p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row">
           <select className="bg-white border border-border px-4 py-2 rounded-xl text-sm font-semibold text-dark outline-none shadow-sm">
             <option>Last 30 Days</option>
             <option>This Quarter</option>
@@ -131,8 +130,8 @@ export function AdminOverview() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Growth Chart */}
-        <div className="lg:col-span-2 bg-white p-6 rounded-3xl border border-border shadow-sm">
-          <div className="flex justify-between items-center mb-6">
+        <div className="lg:col-span-2 bg-white p-4 sm:p-6 rounded-3xl border border-border shadow-sm min-w-0">
+          <div className="flex flex-col gap-3 mb-6 sm:flex-row sm:justify-between sm:items-center">
             <div>
               <h2 className="font-bold text-dark text-lg">User Growth</h2>
               <p className="text-sm text-gray-500">
@@ -143,7 +142,7 @@ export function AdminOverview() {
               <MoreVertical size={20} className="text-gray-400" />
             </button>
           </div>
-          <div className="h-80 w-full">
+          <div className="h-64 w-full sm:h-80">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart
                 data={growthData}
@@ -222,7 +221,7 @@ export function AdminOverview() {
         </div>
 
         {/* User Distribution */}
-        <div className="bg-white p-6 rounded-3xl border border-border shadow-sm flex flex-col">
+        <div className="bg-white p-4 sm:p-6 rounded-3xl border border-border shadow-sm flex flex-col min-w-0">
           <h2 className="font-bold text-dark text-lg mb-2">
             User Distribution
           </h2>
@@ -287,7 +286,7 @@ export function AdminOverview() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Action Required */}
-        <div className="bg-white p-6 rounded-3xl border border-border shadow-sm">
+        <div className="bg-white p-4 sm:p-6 rounded-3xl border border-border shadow-sm min-w-0">
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center gap-2">
               <AlertTriangle size={20} className="text-primary" />
@@ -317,7 +316,7 @@ export function AdminOverview() {
         </div>
 
         {/* Recent Activity */}
-        <div className="bg-white p-6 rounded-3xl border border-border shadow-sm">
+        <div className="bg-white p-4 sm:p-6 rounded-3xl border border-border shadow-sm min-w-0">
           <h2 className="font-bold text-dark text-lg mb-6">
             Recent Platform Activity
           </h2>
@@ -359,7 +358,7 @@ function StatCard({
   color
 }: any) {
   return (
-    <div className="bg-white p-6 rounded-3xl border border-border shadow-sm">
+    <div className="bg-white p-4 sm:p-6 rounded-3xl border border-border shadow-sm min-w-0">
       <div className="flex justify-between items-start mb-4">
         <div
           className={`w-12 h-12 rounded-2xl flex items-center justify-center ${color}`}>
@@ -393,7 +392,7 @@ function StatCard({
 }
 function ActionItem({ title, desc, action, type }: any) {
   return (
-    <div className="flex items-center justify-between p-4 rounded-2xl border border-border bg-gray-50">
+    <div className="flex flex-col gap-3 p-4 rounded-2xl border border-border bg-gray-50 sm:flex-row sm:items-center sm:justify-between">
       <div>
         <h4 className="font-bold text-dark text-sm">{title}</h4>
         <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
@@ -408,14 +407,14 @@ function ActionItem({ title, desc, action, type }: any) {
 }
 function ActivityItem({ title, time, desc, icon, color }: any) {
   return (
-    <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+    <div className="relative flex items-center justify-between gap-3 md:justify-normal md:odd:flex-row-reverse group is-active">
       <div
         className={`flex items-center justify-center w-10 h-10 rounded-full border-4 border-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm ${color}`}>
         
         {icon}
       </div>
-      <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-2xl border border-border bg-white shadow-sm">
-        <div className="flex items-center justify-between mb-1">
+      <div className="min-w-0 flex-1 md:w-[calc(50%-2.5rem)] md:flex-none p-4 rounded-2xl border border-border bg-white shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
           <h4 className="font-bold text-dark text-sm">{title}</h4>
           <span className="text-[10px] text-gray-400 font-medium">{time}</span>
         </div>

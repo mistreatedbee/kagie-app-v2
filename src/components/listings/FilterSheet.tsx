@@ -72,10 +72,10 @@ export function FilterSheet({ isOpen, onClose }: FilterSheetProps) {
             damping: 25,
             stiffness: 200
           }}
-          className="fixed bottom-0 left-0 right-0 w-full max-w-md mx-auto bg-white rounded-t-[2rem] z-50 flex flex-col max-h-[85vh]">
+          className="fixed bottom-0 left-0 right-0 w-full max-w-lg mx-auto bg-white rounded-t-[2rem] z-50 flex flex-col max-h-[85vh] sm:inset-x-6 sm:bottom-8 sm:w-auto sm:rounded-[2rem] sm:border sm:border-border sm:shadow-2xl lg:max-w-2xl">
           
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-border">
+            <div className="flex items-center justify-between p-5 sm:p-6 border-b border-border">
               <div className="flex items-center gap-2">
                 <SlidersHorizontal size={20} className="text-dark" />
                 <h2 className="font-display font-bold text-xl text-dark">
@@ -91,7 +91,7 @@ export function FilterSheet({ isOpen, onClose }: FilterSheetProps) {
             </div>
 
             {/* Scrollable Content */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-8 hide-scrollbar">
+            <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-8 hide-scrollbar">
               {/* Price Range */}
               <div>
                 <div className="flex justify-between items-center mb-4">
@@ -131,7 +131,7 @@ export function FilterSheet({ isOpen, onClose }: FilterSheetProps) {
                 <h3 className="font-bold text-dark mb-4">
                   Distance from Campus
                 </h3>
-                <div className="grid grid-cols-4 gap-2">
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                   {['< 1km', '< 2km', '< 5km', 'Any'].map((dist, i) =>
                 <button
                   key={dist}
@@ -167,7 +167,7 @@ export function FilterSheet({ isOpen, onClose }: FilterSheetProps) {
             </div>
 
             {/* Footer Actions */}
-            <div className="p-6 border-t border-border bg-white flex gap-4 pb-safe">
+            <div className="p-5 sm:p-6 border-t border-border bg-white flex flex-col gap-3 pb-safe sm:flex-row">
               <Button
               variant="outline"
               className="flex-1"

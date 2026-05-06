@@ -33,7 +33,8 @@ export function BookingFlow() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header & Stepper */}
-      <div className="bg-white px-6 pt-12 pb-4 sticky top-0 z-30 shadow-sm">
+      <div className="bg-white px-4 pt-10 pb-4 sticky top-0 z-30 shadow-sm sm:px-6 sm:pt-12">
+        <div className="mx-auto max-w-4xl">
         <div className="flex items-center gap-4 mb-6">
           <button
             onClick={handleBack}
@@ -50,7 +51,8 @@ export function BookingFlow() {
         </div>
 
         {/* Progress Stepper */}
-        <div className="flex justify-between items-center relative">
+        <div className="relative overflow-x-auto hide-scrollbar pb-1">
+        <div className="flex min-w-[420px] justify-between items-center relative">
           <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-gray-100 rounded-full -z-10"></div>
           <div
             className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-primary rounded-full -z-10 transition-all duration-300"
@@ -81,10 +83,12 @@ export function BookingFlow() {
 
           })}
         </div>
+        </div>
+      </div>
       </div>
 
       {/* Content Area */}
-      <div className="flex-1 overflow-y-auto p-6 pb-32">
+      <div className="mx-auto w-full max-w-4xl flex-1 overflow-y-auto p-4 pb-32 sm:p-6 lg:pb-36">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentStep}
@@ -106,7 +110,7 @@ export function BookingFlow() {
             
             {/* Step 1: Room Selection */}
             {currentStep === 0 &&
-            <div className="space-y-4">
+            <div className="space-y-4 lg:max-w-2xl lg:mx-auto">
                 <h2 className="font-display font-bold text-xl text-dark mb-4">
                   Select Room Type
                 </h2>
@@ -157,7 +161,7 @@ export function BookingFlow() {
 
             {/* Step 2: Dates */}
             {currentStep === 1 &&
-            <div className="space-y-6">
+            <div className="space-y-6 lg:max-w-2xl lg:mx-auto">
                 <h2 className="font-display font-bold text-xl text-dark mb-4">
                   When are you moving in?
                 </h2>
@@ -191,7 +195,7 @@ export function BookingFlow() {
 
             {/* Step 3: Details */}
             {currentStep === 2 &&
-            <div className="space-y-4">
+            <div className="space-y-4 lg:max-w-2xl lg:mx-auto">
                 <h2 className="font-display font-bold text-xl text-dark mb-4">
                   Student Details
                 </h2>
@@ -219,7 +223,7 @@ export function BookingFlow() {
 
             {/* Step 4: Documents */}
             {currentStep === 3 &&
-            <div className="space-y-4">
+            <div className="space-y-4 lg:max-w-2xl lg:mx-auto">
                 <h2 className="font-display font-bold text-xl text-dark mb-4">
                   Required Documents
                 </h2>
@@ -273,7 +277,7 @@ export function BookingFlow() {
 
             {/* Step 5: Payment */}
             {currentStep === 4 &&
-            <div className="space-y-6">
+            <div className="space-y-6 lg:max-w-2xl lg:mx-auto">
                 <h2 className="font-display font-bold text-xl text-dark mb-4">
                   Review & Pay
                 </h2>
@@ -336,8 +340,8 @@ export function BookingFlow() {
       </div>
 
       {/* Sticky Bottom Actions */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-border p-4 px-6 pb-safe z-50">
-        <div className="max-w-md mx-auto flex gap-4">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-border p-4 px-4 sm:px-6 pb-safe z-50">
+        <div className="max-w-2xl mx-auto flex gap-3 sm:gap-4">
           {currentStep > 0 &&
           <Button variant="outline" onClick={handleBack} className="px-6">
               Back

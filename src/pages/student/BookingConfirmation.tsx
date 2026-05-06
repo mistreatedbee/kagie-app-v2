@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Check, Download, MessageSquare, Home } from 'lucide-react';
@@ -8,7 +8,7 @@ export function BookingConfirmation() {
   const navigate = useNavigate();
   const listing = mockListings[0];
   return (
-    <div className="min-h-screen bg-primary flex flex-col items-center justify-center p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-primary flex flex-col items-center justify-center p-4 sm:p-6 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute -top-[20%] -right-[10%] w-[70%] h-[70%] rounded-full bg-white opacity-10 blur-3xl" />
@@ -81,7 +81,7 @@ export function BookingConfirmation() {
         transition={{
           delay: 0.4
         }}
-        className="w-full max-w-sm bg-white rounded-3xl p-6 shadow-2xl z-10">
+        className="w-full max-w-sm bg-white rounded-3xl p-5 shadow-2xl z-10 sm:p-6 lg:max-w-2xl">
         
         <div className="text-center mb-6 border-b border-border pb-6">
           <p className="text-sm text-gray-500 uppercase tracking-wider font-semibold mb-1">
@@ -92,7 +92,7 @@ export function BookingConfirmation() {
           </p>
         </div>
 
-        <div className="space-y-4 mb-8">
+        <div className="space-y-4 mb-8 lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0">
           <div className="flex items-center gap-4">
             <img
               src={listing.image}

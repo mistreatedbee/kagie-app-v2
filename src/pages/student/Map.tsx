@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Search, SlidersHorizontal, MapPin } from 'lucide-react';
+import { ArrowLeft, Search, SlidersHorizontal, MapPin, List } from 'lucide-react';
 import { mockListings } from '../../data/mockData';
 import { ListingCard } from '../../components/listings/ListingCard';
 export function Map() {
@@ -19,14 +19,14 @@ export function Map() {
       </div>
 
       {/* Top Bar */}
-      <div className="relative z-10 px-4 pt-12 pb-4 flex gap-3">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl gap-2 px-3 pt-10 pb-4 sm:gap-3 sm:px-6 sm:pt-12">
         <button
           onClick={() => navigate(-1)}
           className="w-12 h-12 rounded-2xl bg-white shadow-md flex items-center justify-center text-dark hover:bg-gray-50 transition-colors shrink-0">
           
           <ArrowLeft size={20} />
         </button>
-        <div className="flex-1 bg-white rounded-2xl shadow-md p-3 flex items-center gap-3">
+        <div className="min-w-0 flex-1 bg-white rounded-2xl shadow-md p-3 flex items-center gap-3">
           <Search className="text-gray-400 ml-1" size={20} />
           <input
             type="text"
@@ -101,8 +101,8 @@ export function Map() {
       </div>
 
       {/* Bottom Listing Preview */}
-      <div className="relative z-10 p-4 pb-8">
-        <div className="flex justify-between items-center mb-4 px-2">
+      <div className="relative z-10 mx-auto w-full max-w-7xl p-3 pb-8 sm:p-4">
+        <div className="flex justify-between items-center mb-4 px-1 sm:px-2">
           <button
             onClick={() => navigate('/listings')}
             className="bg-dark text-white px-5 py-2.5 rounded-full font-semibold shadow-lg flex items-center gap-2 hover:bg-dark/90 transition-colors">
@@ -116,7 +116,7 @@ export function Map() {
         </div>
 
         {selectedListing &&
-        <div className="shadow-2xl rounded-3xl">
+        <div className="max-w-2xl shadow-2xl rounded-3xl lg:max-w-3xl">
             <ListingCard listing={selectedListing} layout="horizontal" />
           </div>
         }

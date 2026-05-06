@@ -1,13 +1,9 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import {
   Building2,
   Users,
   CreditCard,
-  MessageSquare,
-  TrendingUp,
   Calendar,
-  Star,
   ArrowUpRight,
   ArrowDownRight } from
 'lucide-react';
@@ -65,7 +61,7 @@ const occupancyData = [
 export function HostOverview() {
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col gap-4 lg:flex-row lg:justify-between lg:items-end">
         <div>
           <h1 className="font-display font-bold text-2xl text-dark">
             Dashboard Overview
@@ -74,7 +70,7 @@ export function HostOverview() {
             Welcome back, Sarah. Here's what's happening today.
           </p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row">
           <button className="bg-white border border-border px-4 py-2 rounded-xl text-sm font-semibold text-dark hover:bg-gray-50 transition-colors">
             Download Report
           </button>
@@ -123,15 +119,15 @@ export function HostOverview() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Chart */}
-        <div className="lg:col-span-2 bg-white p-6 rounded-3xl border border-border shadow-sm">
-          <div className="flex justify-between items-center mb-6">
+        <div className="lg:col-span-2 bg-white p-4 sm:p-6 rounded-3xl border border-border shadow-sm min-w-0">
+          <div className="flex flex-col gap-3 mb-6 sm:flex-row sm:justify-between sm:items-center">
             <h2 className="font-bold text-dark text-lg">Revenue Overview</h2>
             <select className="bg-gray-50 border border-border rounded-lg px-3 py-1.5 text-sm font-medium outline-none">
               <option>Last 6 Months</option>
               <option>This Year</option>
             </select>
           </div>
-          <div className="h-72 w-full">
+          <div className="h-64 w-full sm:h-72">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
                 data={earningsData}
@@ -198,7 +194,7 @@ export function HostOverview() {
         </div>
 
         {/* Occupancy Chart */}
-        <div className="bg-white p-6 rounded-3xl border border-border shadow-sm flex flex-col">
+        <div className="bg-white p-4 sm:p-6 rounded-3xl border border-border shadow-sm flex flex-col min-w-0">
           <h2 className="font-bold text-dark text-lg mb-6">
             Occupancy by Property
           </h2>
@@ -259,8 +255,8 @@ export function HostOverview() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Bookings */}
-        <div className="bg-white p-6 rounded-3xl border border-border shadow-sm">
-          <div className="flex justify-between items-center mb-6">
+        <div className="bg-white p-4 sm:p-6 rounded-3xl border border-border shadow-sm min-w-0">
+          <div className="flex flex-col gap-2 mb-6 sm:flex-row sm:justify-between sm:items-center">
             <h2 className="font-bold text-dark text-lg">
               Recent Booking Requests
             </h2>
@@ -272,7 +268,7 @@ export function HostOverview() {
             {[1, 2, 3].map((i) =>
             <div
               key={i}
-              className="flex items-center justify-between p-4 rounded-2xl border border-border hover:border-primary/30 transition-colors">
+              className="flex flex-col gap-3 p-4 rounded-2xl border border-border hover:border-primary/30 transition-colors sm:flex-row sm:items-center sm:justify-between">
               
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center font-bold text-gray-500">
@@ -301,8 +297,8 @@ export function HostOverview() {
         </div>
 
         {/* Recent Messages */}
-        <div className="bg-white p-6 rounded-3xl border border-border shadow-sm">
-          <div className="flex justify-between items-center mb-6">
+        <div className="bg-white p-4 sm:p-6 rounded-3xl border border-border shadow-sm min-w-0">
+          <div className="flex flex-col gap-2 mb-6 sm:flex-row sm:justify-between sm:items-center">
             <h2 className="font-bold text-dark text-lg">Unread Messages</h2>
             <button className="text-sm font-semibold text-primary hover:underline">
               Go to Inbox
@@ -319,7 +315,7 @@ export function HostOverview() {
                   <div className="absolute top-0 right-0 w-2.5 h-2.5 bg-primary rounded-full border-2 border-white"></div>
                 </div>
                 <div className="flex-1">
-                  <div className="flex justify-between items-baseline mb-0.5">
+                  <div className="flex flex-wrap justify-between gap-2 items-baseline mb-0.5">
                     <h4 className="font-bold text-dark text-sm">
                       Applicant {i}
                     </h4>
@@ -347,7 +343,7 @@ function StatCard({
   color
 }: any) {
   return (
-    <div className="bg-white p-6 rounded-3xl border border-border shadow-sm">
+    <div className="bg-white p-4 sm:p-6 rounded-3xl border border-border shadow-sm min-w-0">
       <div className="flex justify-between items-start mb-4">
         <div
           className={`w-12 h-12 rounded-2xl flex items-center justify-center ${color}`}>

@@ -60,7 +60,7 @@ export function Onboarding() {
       </div>
 
       {/* Content Area */}
-      <div className="flex-1 flex flex-col justify-between pb-12 pt-20">
+      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col justify-between pb-10 pt-20 sm:pb-12">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
@@ -79,10 +79,10 @@ export function Onboarding() {
             transition={{
               duration: 0.3
             }}
-            className="flex-1 flex flex-col px-6">
+            className="flex-1 flex flex-col px-4 sm:px-6 lg:grid lg:grid-cols-[minmax(0,1.1fr)_minmax(360px,0.9fr)] lg:items-center lg:gap-12">
             
             {/* Image Container */}
-            <div className="flex-1 relative rounded-[2.5rem] overflow-hidden mb-8 shadow-soft">
+            <div className="flex-1 relative min-h-[360px] rounded-[2.5rem] overflow-hidden mb-8 shadow-soft lg:mb-0 lg:h-[620px]">
               <img
                 src={slides[currentSlide].image}
                 alt="Onboarding"
@@ -104,8 +104,8 @@ export function Onboarding() {
             </div>
 
             {/* Text Content */}
-            <div className="text-center px-4">
-              <h2 className="font-display font-bold text-2xl text-dark mb-4 leading-tight">
+            <div className="text-center px-4 lg:text-left">
+              <h2 className="font-display font-bold text-2xl text-dark mb-4 leading-tight sm:text-3xl lg:text-4xl">
                 {slides[currentSlide].title}
               </h2>
               <p className="text-gray-500 text-base leading-relaxed">
@@ -116,7 +116,7 @@ export function Onboarding() {
         </AnimatePresence>
 
         {/* Bottom Navigation */}
-        <div className="px-6 pt-8 flex items-center justify-between">
+        <div className="px-4 pt-8 flex items-center justify-between sm:px-6">
           {/* Progress Dots */}
           <div className="flex gap-2">
             {slides.map((_, index) =>

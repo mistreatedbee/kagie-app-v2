@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { GraduationCap, Building2, ShieldCheck, ArrowRight } from 'lucide-react';
-import { Button } from '../../components/common/Button';
 export function RoleSelection() {
   const navigate = useNavigate();
   const roles = [
@@ -32,8 +31,8 @@ export function RoleSelection() {
   }];
 
   return (
-    <div className="min-h-screen bg-background flex flex-col px-6 py-12 max-w-md mx-auto">
-      <div className="flex-1 flex flex-col justify-center">
+    <div className="min-h-screen bg-background flex flex-col px-4 py-8 sm:px-6 sm:py-12">
+      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center">
         <motion.div
           initial={{
             opacity: 0,
@@ -57,7 +56,7 @@ export function RoleSelection() {
           <p className="text-gray-500">How would you like to use Kagie Stay?</p>
         </motion.div>
 
-        <div className="space-y-4">
+        <div className="grid gap-4 lg:grid-cols-3">
           {roles.map((role, index) => {
             const Icon = role.icon;
             return (
@@ -76,7 +75,7 @@ export function RoleSelection() {
                   delay: index * 0.1
                 }}
                 onClick={() => navigate(role.path)}
-                className="w-full bg-white p-5 rounded-3xl border border-border hover:border-primary/30 hover:shadow-md transition-all group text-left flex items-center gap-4">
+                className="w-full bg-white p-5 rounded-3xl border border-border hover:border-primary/30 hover:shadow-md transition-all group text-left flex items-center gap-4 lg:flex-col lg:items-start lg:min-h-64">
                 
                 <div
                   className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ${role.color}`}>
@@ -100,7 +99,7 @@ export function RoleSelection() {
         </div>
       </div>
 
-      <div className="mt-8 text-center">
+      <div className="mx-auto mt-8 max-w-2xl text-center">
         <p className="text-sm text-gray-500">
           By continuing, you agree to our{' '}
           <a href="#" className="text-dark font-medium underline">

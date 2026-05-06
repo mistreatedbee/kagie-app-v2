@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Calendar, MapPin, ChevronRight, Check } from 'lucide-react';
+import { Calendar, MapPin, Check } from 'lucide-react';
 import { mockUser } from '../../data/mockData';
 export function Bookings() {
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('upcoming');
   const tabs = [
   {
@@ -22,7 +20,8 @@ export function Bookings() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <div className="bg-white px-6 pt-12 pb-4 sticky top-0 z-30 shadow-sm">
+      <div className="bg-white px-4 pt-10 pb-4 sticky top-0 z-30 shadow-sm sm:px-6 sm:pt-12">
+        <div className="mx-auto max-w-5xl">
         <h1 className="font-display font-bold text-2xl text-dark mb-6">
           My Bookings
         </h1>
@@ -39,12 +38,13 @@ export function Bookings() {
             </button>
           )}
         </div>
+        </div>
       </div>
 
       {/* Content */}
-      <div className="flex-1 p-6">
+      <div className="mx-auto w-full max-w-5xl flex-1 p-4 sm:p-6 lg:px-8">
         {activeTab === 'upcoming' && mockUser.activeBooking ?
-        <div className="space-y-4">
+        <div className="space-y-4 lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-6 lg:space-y-0">
             <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-border">
               <div className="h-32 relative">
                 <img
@@ -58,7 +58,7 @@ export function Bookings() {
               </div>
 
               <div className="p-5">
-                <div className="flex justify-between items-start mb-4">
+                <div className="flex flex-col gap-3 mb-4 sm:flex-row sm:justify-between sm:items-start">
                   <div>
                     <h3 className="font-bold text-dark text-lg">
                       {mockUser.activeBooking.listingName}
@@ -72,7 +72,7 @@ export function Bookings() {
                   </span>
                 </div>
 
-                <div className="bg-gray-50 rounded-2xl p-4 flex justify-between items-center mb-4 border border-border">
+                <div className="bg-gray-50 rounded-2xl p-4 flex flex-col gap-4 mb-4 border border-border sm:flex-row sm:justify-between sm:items-center">
                   <div>
                     <p className="text-xs text-gray-500 font-medium mb-1">
                       Move-in Date
@@ -97,7 +97,7 @@ export function Bookings() {
                   </div>
                 </div>
 
-                <div className="flex gap-3">
+                <div className="flex flex-col gap-3 sm:flex-row">
                   <button className="flex-1 bg-gray-100 text-dark py-3 rounded-xl font-semibold text-sm hover:bg-gray-200 transition-colors">
                     View Details
                   </button>
@@ -106,6 +106,15 @@ export function Bookings() {
                   </button>
                 </div>
               </div>
+            </div>
+            <div className="hidden rounded-3xl border border-border bg-white p-6 shadow-sm lg:block">
+              <h3 className="font-display font-bold text-lg text-dark mb-2">
+                Stay Support
+              </h3>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                Keep your booking details, move-in date, and host messages close
+                while preparing for arrival.
+              </p>
             </div>
           </div> :
 
