@@ -15,6 +15,7 @@ import {
   Search,
   Menu } from
 'lucide-react';
+import { Logo } from '../common/Logo';
 import { signOut } from '../../lib/auth';
 interface DashboardShellProps {
   role: 'host' | 'admin' | 'support' | 'finance';
@@ -119,12 +120,9 @@ export function DashboardShell({ role }: DashboardShellProps) {
       <aside
         className={`fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] bg-white border-r border-border transition-transform duration-300 flex flex-col lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 lg:transition-all ${isMobileNavOpen ? 'translate-x-0' : '-translate-x-full'} ${isSidebarOpen ? 'lg:w-64' : 'lg:w-20'}`}>
         
-        <div className="h-16 flex items-center px-6 border-b border-border">
-          <div className="flex items-center gap-2 text-primary font-display font-bold text-xl">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
-              K
-            </div>
-            {isSidebarOpen && <span>Kagie Stay</span>}
+        <div className="h-16 flex items-center px-4 border-b border-border">
+          <div className="flex w-full items-center justify-center gap-2 text-primary font-display font-bold text-xl">
+            <Logo className={isSidebarOpen ? 'h-12 w-32' : 'h-10 w-12'} />
           </div>
         </div>
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { GraduationCap, Building2, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Logo } from '../../components/common/Logo';
 export function RoleSelection() {
   const navigate = useNavigate();
   const roles = [
@@ -47,9 +48,7 @@ export function RoleSelection() {
           }}
           className="mb-10">
           
-          <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-white font-display font-bold text-2xl mb-6">
-            K
-          </div>
+          <Logo className="mb-6 h-16 w-36" />
           <h1 className="font-display font-bold text-3xl text-dark mb-2">
             Choose your role
           </h1>

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Logo } from '../../components/common/Logo';
 export function Splash() {
   const navigate = useNavigate();
   useEffect(() => {
@@ -59,10 +60,8 @@ export function Splash() {
         }}
         className="flex flex-col items-center z-10">
         
-        <div className="w-24 h-24 bg-white rounded-3xl flex items-center justify-center shadow-2xl mb-6">
-          <span className="text-primary font-display font-bold text-5xl">
-            K
-          </span>
+        <div className="w-36 h-24 bg-white rounded-3xl flex items-center justify-center shadow-2xl mb-6 px-4">
+          <Logo className="h-20 w-full" />
         </div>
 
         <h1 className="text-white font-display font-bold text-4xl mb-3 tracking-tight">

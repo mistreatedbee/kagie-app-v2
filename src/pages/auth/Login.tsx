@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../../components/common/Button';
 import { Input } from '../../components/common/Input';
+import { Logo } from '../../components/common/Logo';
 import {
   formatAuthError,
   getCurrentAuthState,
@@ -89,8 +90,8 @@ export function Login() {
     <div className="min-h-screen bg-background px-4 py-6 sm:px-6 lg:flex lg:items-center lg:justify-center">
       <div className="mx-auto flex min-h-[calc(100vh-3rem)] w-full max-w-md flex-col rounded-none bg-white px-2 py-2 sm:px-0 lg:min-h-0 lg:max-w-5xl lg:grid lg:grid-cols-[0.9fr_1.1fr] lg:overflow-hidden lg:rounded-3xl lg:border lg:border-border lg:p-0 lg:shadow-card">
         <div className="hidden bg-primary p-10 text-white lg:flex lg:flex-col lg:justify-between">
-          <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-primary font-display font-bold text-2xl">
-            K
+          <div className="w-36 h-16 bg-white rounded-xl flex items-center justify-center px-3">
+            <Logo className="h-12 w-full" />
           </div>
           <div>
             <h2 className="font-display text-3xl font-bold mb-3">Kagie Stay</h2>
@@ -106,6 +107,7 @@ export function Login() {
             className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-dark hover:bg-gray-100 transition-colors mb-8">
             <ArrowLeft size={20} />
           </button>
+          <Logo className="mb-8 h-14 w-32 lg:hidden" />
 
           <motion.div
             initial={{

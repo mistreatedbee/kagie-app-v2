@@ -2,6 +2,7 @@ import React, { useState, createElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, ShieldCheck, Home as HomeIcon } from 'lucide-react';
+import { Logo } from '../../components/common/Logo';
 const slides = [
 {
   id: 1,
@@ -50,7 +51,8 @@ export function Onboarding() {
   return (
     <div className="min-h-screen bg-white flex flex-col relative overflow-hidden">
       {/* Top Actions */}
-      <div className="absolute top-0 left-0 w-full p-6 flex justify-end z-20">
+      <div className="absolute top-0 left-0 w-full p-6 flex items-center justify-between z-20">
+        <Logo className="h-12 w-28" />
         <button
           onClick={handleSkip}
           className="text-gray-500 font-medium text-sm hover:text-dark transition-colors">
