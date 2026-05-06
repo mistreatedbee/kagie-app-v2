@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { ArrowLeft, Search, SlidersHorizontal, MapPin, List } from 'lucide-react';
 import { mockListings } from '../../data/mockData';
 import { ListingCard } from '../../components/listings/ListingCard';
@@ -19,14 +20,17 @@ export function Map() {
       </div>
 
       {/* Top Bar */}
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl gap-2 px-3 pt-10 pb-4 sm:gap-3 sm:px-6 sm:pt-12">
+      <motion.div
+        initial={{ opacity: 0, y: -12 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="relative z-10 mx-auto flex w-full max-w-7xl gap-2 px-3 pt-10 pb-4 sm:gap-3 sm:px-6 sm:pt-12">
         <button
           onClick={() => navigate(-1)}
           className="w-12 h-12 rounded-2xl bg-white shadow-md flex items-center justify-center text-dark hover:bg-gray-50 transition-colors shrink-0">
           
           <ArrowLeft size={20} />
         </button>
-        <div className="min-w-0 flex-1 bg-white rounded-2xl shadow-md p-3 flex items-center gap-3">
+        <div className="min-w-0 flex-1 bg-white/90 backdrop-blur-xl rounded-2xl shadow-md p-3 flex items-center gap-3 border border-white/60">
           <Search className="text-gray-400 ml-1" size={20} />
           <input
             type="text"
@@ -38,12 +42,14 @@ export function Map() {
         <button className="w-12 h-12 rounded-2xl bg-white shadow-md flex items-center justify-center text-dark hover:bg-gray-50 transition-colors shrink-0">
           <SlidersHorizontal size={20} />
         </button>
-      </div>
+      </motion.div>
 
       {/* Map Pins (Mocked) */}
       <div className="relative flex-1 z-0">
         {/* Pin 1 */}
-        <button
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.96 }}
           onClick={() => setSelectedListing(mockListings[0])}
           className={`absolute top-[30%] left-[40%] transform -translate-x-1/2 -translate-y-1/2 transition-all ${selectedListing.id === mockListings[0].id ? 'scale-110 z-20' : 'z-10 hover:scale-105'}`}>
           
@@ -55,10 +61,12 @@ export function Map() {
           <div
             className={`w-3 h-3 rotate-45 mx-auto -mt-1.5 ${selectedListing.id === mockListings[0].id ? 'bg-primary' : 'bg-white'}`}>
           </div>
-        </button>
+        </motion.button>
 
         {/* Pin 2 */}
-        <button
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.96 }}
           onClick={() => setSelectedListing(mockListings[1])}
           className={`absolute top-[45%] left-[60%] transform -translate-x-1/2 -translate-y-1/2 transition-all ${selectedListing.id === mockListings[1].id ? 'scale-110 z-20' : 'z-10 hover:scale-105'}`}>
           
@@ -70,10 +78,12 @@ export function Map() {
           <div
             className={`w-3 h-3 rotate-45 mx-auto -mt-1.5 ${selectedListing.id === mockListings[1].id ? 'bg-primary' : 'bg-white'}`}>
           </div>
-        </button>
+        </motion.button>
 
         {/* Pin 3 */}
-        <button
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.96 }}
           onClick={() => setSelectedListing(mockListings[3])}
           className={`absolute top-[60%] left-[30%] transform -translate-x-1/2 -translate-y-1/2 transition-all ${selectedListing.id === mockListings[3].id ? 'scale-110 z-20' : 'z-10 hover:scale-105'}`}>
           
@@ -85,7 +95,7 @@ export function Map() {
           <div
             className={`w-3 h-3 rotate-45 mx-auto -mt-1.5 ${selectedListing.id === mockListings[3].id ? 'bg-primary' : 'bg-white'}`}>
           </div>
-        </button>
+        </motion.button>
 
         {/* Campus Marker */}
         <div className="absolute top-[50%] left-[45%] transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
@@ -101,7 +111,10 @@ export function Map() {
       </div>
 
       {/* Bottom Listing Preview */}
-      <div className="relative z-10 mx-auto w-full max-w-7xl p-3 pb-8 sm:p-4">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="relative z-10 mx-auto w-full max-w-7xl p-3 pb-8 sm:p-4">
         <div className="flex justify-between items-center mb-4 px-1 sm:px-2">
           <button
             onClick={() => navigate('/listings')}
@@ -120,7 +133,7 @@ export function Map() {
             <ListingCard listing={selectedListing} layout="horizontal" />
           </div>
         }
-      </div>
+      </motion.div>
     </div>);
 
 }

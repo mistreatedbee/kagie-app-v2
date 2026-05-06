@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import {
   ArrowLeft,
   Heart,
@@ -52,7 +53,10 @@ export function ListingDetail() {
     <div className="min-h-screen bg-white pb-32 lg:bg-background">
       <div className="lg:mx-auto lg:grid lg:max-w-7xl lg:grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)] lg:gap-6 lg:px-6 lg:py-6">
       {/* Image Gallery Header */}
-      <div className="relative h-[40vh] w-full bg-gray-100 lg:sticky lg:top-6 lg:h-[calc(100vh-12rem)] lg:min-h-[520px] lg:overflow-hidden lg:rounded-3xl">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="relative h-[40vh] w-full bg-gray-100 lg:sticky lg:top-6 lg:h-[calc(100vh-12rem)] lg:min-h-[520px] lg:overflow-hidden lg:rounded-3xl">
         <img
           src={images[activeImage]}
           alt={listing.name}
@@ -92,10 +96,13 @@ export function ListingDetail() {
 
           )}
         </div>
-      </div>
+      </motion.div>
 
       {/* Content */}
-      <div className="px-4 pt-6 bg-white rounded-t-3xl -mt-6 relative z-20 sm:px-6 lg:mt-0 lg:rounded-3xl lg:border lg:border-border lg:p-8 lg:shadow-sm">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="px-4 pt-6 bg-white rounded-t-3xl -mt-6 relative z-20 sm:px-6 lg:mt-0 lg:rounded-3xl lg:border lg:border-border lg:p-8 lg:shadow-sm">
         {/* Title & Rating */}
         <div className="flex flex-col gap-3 mb-2 sm:flex-row sm:justify-between sm:items-start">
           <h1 className="font-display font-bold text-2xl text-dark leading-tight sm:pr-4 lg:text-3xl">
@@ -230,7 +237,7 @@ export function ListingDetail() {
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
       </div>
 
       {/* Sticky Bottom Bar */}
