@@ -11,8 +11,13 @@ import {
   LogOut } from
 'lucide-react';
 import { mockUser } from '../../data/mockData';
+import { signOut } from '../../lib/auth';
 export function Profile() {
   const navigate = useNavigate();
+  const handleLogout = async () => {
+    await signOut();
+    navigate('/auth/role', { replace: true });
+  };
   const menuItems = [
   {
     icon: Heart,
@@ -105,7 +110,7 @@ export function Profile() {
 
         {/* Logout Button */}
         <button
-          onClick={() => navigate('/auth/role')}
+          onClick={handleLogout}
           className="w-full bg-white border border-border rounded-2xl p-4 flex items-center justify-center gap-2 text-primary font-bold hover:bg-primary/5 transition-colors shadow-sm">
           
           <LogOut size={20} />

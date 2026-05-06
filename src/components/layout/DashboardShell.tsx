@@ -15,6 +15,7 @@ import {
   Search,
   Menu } from
 'lucide-react';
+import { signOut } from '../../lib/auth';
 interface DashboardShellProps {
   role: 'host' | 'admin' | 'support' | 'finance';
 }
@@ -102,6 +103,10 @@ export function DashboardShell({ role }: DashboardShellProps) {
     navigate(path);
     setIsMobileNavOpen(false);
   };
+  const handleLogout = async () => {
+    await signOut();
+    navigate('/auth/role', { replace: true });
+  };
   return (
     <div className="min-h-screen bg-background lg:flex">
       {isMobileNavOpen &&
@@ -150,7 +155,9 @@ export function DashboardShell({ role }: DashboardShellProps) {
         </div>
 
         <div className="p-4 border-t border-border">
-          <button className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 w-full transition-colors">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 w-full transition-colors">
             <LogOut size={20} className="text-gray-400" />
             {isSidebarOpen && <span>Logout</span>}
           </button>

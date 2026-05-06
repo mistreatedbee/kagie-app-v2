@@ -3,11 +3,13 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 // Layouts
 import { MobileShell } from './components/layout/MobileShell';
 import { DashboardShell } from './components/layout/DashboardShell';
+import { AuthGuard } from './components/auth/AuthGuard';
 // Student Pages
 import { Splash } from './pages/student/Splash';
 import { Onboarding } from './pages/student/Onboarding';
 import { RoleSelection } from './pages/auth/RoleSelection';
 import { Login } from './pages/auth/Login';
+import { Signup } from './pages/auth/Signup';
 import { Home } from './pages/student/Home';
 import { Listings } from './pages/student/Listings';
 import { ListingDetail } from './pages/student/ListingDetail';
@@ -29,9 +31,15 @@ export function App() {
 
         <Route path="/auth/role" element={<RoleSelection />} />
         <Route path="/auth/login" element={<Login />} />
+        <Route path="/auth/signup" element={<Signup />} />
 
         {/* Student App Routes (Mobile Shell) */}
-        <Route element={<MobileShell />}>
+        <Route
+          element={
+          <AuthGuard allowedRoles={['student']}>
+              <MobileShell />
+            </AuthGuard>
+          }>
           <Route path="/home" element={<Home />} />
           <Route path="/listings" element={<Listings />} />
           <Route path="/map" element={<Map />} />
@@ -47,12 +55,24 @@ export function App() {
         </Route>
 
         {/* Host Dashboard Routes (Dashboard Shell) */}
-        <Route path="/host" element={<DashboardShell role="host" />}>
+        <Route
+          path="/host"
+          element={
+          <AuthGuard allowedRoles={['host']}>
+              <DashboardShell role="host" />
+            </AuthGuard>
+          }>
           <Route index element={<HostOverview />} />
         </Route>
 
         {/* Admin Dashboard Routes (Dashboard Shell) */}
-        <Route path="/admin" element={<DashboardShell role="admin" />}>
+        <Route
+          path="/admin"
+          element={
+          <AuthGuard allowedRoles={['admin']}>
+              <DashboardShell role="admin" />
+            </AuthGuard>
+          }>
           <Route index element={<AdminOverview />} />
         </Route>
       </Routes>
