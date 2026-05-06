@@ -4,6 +4,7 @@ import { insforge } from './insforge';
 export type KagieRole = 'student' | 'host' | 'admin';
 
 const PENDING_OAUTH_ROLE_KEY = 'kagie.pendingOAuthRole';
+const PENDING_AUTH_REDIRECT_ROLE_KEY = 'kagie.pendingAuthRedirectRole';
 const SIGNUP_ROLE_PREFIX = 'kagie.signupRole.';
 export const fallbackAvatarUrl =
   'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80';
@@ -69,6 +70,21 @@ const clearSignupRole = (email: string) => {
 
 export const storePendingOAuthRole = (role: KagieRole) => {
   window.localStorage.setItem(PENDING_OAUTH_ROLE_KEY, role);
+};
+
+export const storePendingAuthRedirectRole = (role: KagieRole) => {
+  window.localStorage.setItem(PENDING_AUTH_REDIRECT_ROLE_KEY, role);
+};
+
+export const getPendingAuthRedirectRole = () => {
+  if (typeof window === 'undefined') return null;
+  const role = window.localStorage.getItem(PENDING_AUTH_REDIRECT_ROLE_KEY);
+  return isKagieRole(role) ? role : null;
+};
+
+export const clearPendingAuthRedirectRole = () => {
+  if (typeof window === 'undefined') return;
+  window.localStorage.removeItem(PENDING_AUTH_REDIRECT_ROLE_KEY);
 };
 
 const takePendingOAuthRole = () => {
@@ -189,8 +205,9 @@ export const signUpWithEmail = async (
   role: KagieRole
 ) => {
   storeSignupRole(email, role);
+  storePendingAuthRedirectRole(role);
 
-  const redirectTo = `${window.location.origin}/auth/login?role=${role}`;
+  const redirectTo = `${window.location.origin}/auth/login`;
   const { data, error } = await insforge.auth.signUp({
     name,
     email,
@@ -210,10 +227,11 @@ export const signUpWithEmail = async (
 
 export const signInWithOAuth = async (provider: 'google' | 'github', role: KagieRole) => {
   storePendingOAuthRole(role);
+  storePendingAuthRedirectRole(role);
 
   const { error } = await insforge.auth.signInWithOAuth({
     provider,
-    redirectTo: `${window.location.origin}/auth/login?role=${role}&oauth=1`
+    redirectTo: `${window.location.origin}/auth/login`
   });
 
   if (error) throw error;

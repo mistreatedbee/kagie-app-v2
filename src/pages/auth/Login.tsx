@@ -14,9 +14,11 @@ import { Input } from '../../components/common/Input';
 import { Logo } from '../../components/common/Logo';
 import {
   formatAuthError,
+  clearPendingAuthRedirectRole,
   getCurrentAuthState,
-  getRoleFromSearch,
+  getPendingAuthRedirectRole,
   getRoleLandingPath,
+  isKagieRole,
   signInWithEmail,
   signInWithOAuth
 } from '../../lib/auth';
@@ -24,7 +26,8 @@ import {
 export function Login() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const role = getRoleFromSearch(searchParams.get('role'));
+  const roleParam = searchParams.get('role');
+  const role = isKagieRole(roleParam) ? roleParam : getPendingAuthRedirectRole() || 'student';
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [oauthProvider, setOauthProvider] = useState<'google' | 'github' | null>(null);
@@ -42,11 +45,14 @@ export function Login() {
   useEffect(() => {
     let isMounted = true;
 
-    if (searchParams.get('oauth') !== '1') return undefined;
+    if (!getPendingAuthRedirectRole() && !window.location.search.includes('insforge_code')) {
+      return undefined;
+    }
 
     getCurrentAuthState()
       .then(({ user, role: savedRole }) => {
         if (!isMounted || !user || !savedRole) return;
+        clearPendingAuthRedirectRole();
         navigate(getRoleLandingPath(savedRole), { replace: true });
       })
       .catch((authError) => {
@@ -66,6 +72,7 @@ export function Login() {
 
     try {
       const savedRole = await signInWithEmail(email, password, role);
+      clearPendingAuthRedirectRole();
       navigate(getRoleLandingPath(savedRole), { replace: true });
     } catch (authError) {
       setError(formatAuthError(authError));
