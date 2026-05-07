@@ -6,14 +6,19 @@ export type KagieRole = 'student' | 'host' | 'admin';
 const PENDING_OAUTH_ROLE_KEY = 'kagie.pendingOAuthRole';
 const PENDING_AUTH_REDIRECT_ROLE_KEY = 'kagie.pendingAuthRedirectRole';
 const SIGNUP_ROLE_PREFIX = 'kagie.signupRole.';
+const AVATAR_BUCKET = 'avatars';
+const MAX_AVATAR_FILE_SIZE = 5 * 1024 * 1024;
+const ALLOWED_AVATAR_TYPES = ['image/png', 'image/jpeg', 'image/webp', 'image/gif'];
 export const fallbackAvatarUrl =
   'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80';
 
 export interface EditableProfile {
+  userId: string;
   name: string;
   institution: string;
   phone: string;
   avatar_url: string;
+  avatar_key: string;
   role: KagieRole | null;
   email: string;
   emailVerified: boolean;
@@ -112,10 +117,12 @@ export const normalizeEditableProfile = (user: UserSchema): EditableProfile => {
   const profile = (user.profile || {}) as Record<string, unknown>;
 
   return {
+    userId: user.id,
     name: readStringField(profile, 'name', user.email.split('@')[0] || 'Kagie User'),
     institution: readStringField(profile, 'institution'),
     phone: readStringField(profile, 'phone'),
     avatar_url: readStringField(profile, 'avatar_url', fallbackAvatarUrl),
+    avatar_key: readStringField(profile, 'avatar_key'),
     role: getProfileRole(profile),
     email: user.email,
     emailVerified: user.emailVerified,
@@ -132,16 +139,59 @@ export const getEditableProfile = async () => {
   return normalizeEditableProfile(data.user);
 };
 
+export const validateAvatarFile = (file: File) => {
+  if (!ALLOWED_AVATAR_TYPES.includes(file.type)) {
+    return 'Choose a PNG, JPG, WebP, or GIF image.';
+  }
+
+  if (file.size > MAX_AVATAR_FILE_SIZE) {
+    return 'Profile picture must be 5 MB or smaller.';
+  }
+
+  return '';
+};
+
+const getAvatarExtension = (file: File) => {
+  const typeExtension = file.type.split('/')[1];
+  if (typeExtension === 'jpeg') return 'jpg';
+  if (typeExtension) return typeExtension;
+
+  const fileExtension = file.name.split('.').pop();
+  return fileExtension || 'jpg';
+};
+
+const uploadAvatarFile = async (currentProfile: EditableProfile, file: File) => {
+  const validationError = validateAvatarFile(file);
+  if (validationError) throw new Error(validationError);
+
+  const extension = getAvatarExtension(file).toLowerCase();
+  const objectKey = `profiles/${currentProfile.userId}/avatar-${Date.now()}.${extension}`;
+  const { data, error } = await insforge.storage.from(AVATAR_BUCKET).upload(objectKey, file);
+
+  if (error) throw error;
+  if (!data) throw new Error('Profile picture upload did not return a file.');
+
+  return {
+    avatar_url: data.url,
+    avatar_key: data.key
+  };
+};
+
 export const updateEditableProfile = async (
   currentProfile: EditableProfile,
-  updates: Pick<EditableProfile, 'name' | 'institution' | 'phone' | 'avatar_url'>
+  updates: Pick<EditableProfile, 'name' | 'institution' | 'phone'>,
+  avatarFile?: File | null
 ) => {
+  const uploadedAvatar = avatarFile ? await uploadAvatarFile(currentProfile, avatarFile) : null;
+  const avatar_url = uploadedAvatar?.avatar_url || currentProfile.avatar_url;
+  const avatar_key = uploadedAvatar?.avatar_key || currentProfile.avatar_key;
   const nextProfile = {
     ...currentProfile.rawProfile,
     name: updates.name.trim(),
     institution: updates.institution.trim(),
     phone: updates.phone.trim(),
-    avatar_url: updates.avatar_url.trim(),
+    avatar_url,
+    ...(avatar_key ? { avatar_key } : {}),
     ...(currentProfile.role ? { role: currentProfile.role } : {})
   };
 
@@ -154,7 +204,8 @@ export const updateEditableProfile = async (
     name: updates.name.trim(),
     institution: updates.institution.trim(),
     phone: updates.phone.trim(),
-    avatar_url: updates.avatar_url.trim() || fallbackAvatarUrl,
+    avatar_url: avatar_url || fallbackAvatarUrl,
+    avatar_key,
     rawProfile: (data?.profile || nextProfile) as Record<string, unknown>
   };
 };
