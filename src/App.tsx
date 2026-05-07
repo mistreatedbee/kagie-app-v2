@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { MobileShell } from './components/layout/MobileShell';
 import { DashboardShell } from './components/layout/DashboardShell';
 import { AuthGuard } from './components/auth/AuthGuard';
+import { AdminLayout } from './components/admin/AdminLayout';
+import { AdminDataProvider } from './context/AdminDataContext';
 // Student Pages
 import { Splash } from './pages/student/Splash';
 import { Onboarding } from './pages/student/Onboarding';
@@ -21,7 +23,30 @@ import { Profile } from './pages/student/Profile';
 import { Bookings } from './pages/student/Bookings';
 import { Saved } from './pages/student/Saved';
 import { HostOverview } from './pages/host/HostOverview';
-import { AdminOverview } from './pages/admin/AdminOverview';
+import { AdminLogin } from './pages/admin/AdminLogin';
+import {
+  AdminAnalytics,
+  AdminAuditLogs,
+  AdminBookings,
+  AdminContent,
+  AdminDashboard,
+  AdminDocuments,
+  AdminFallback,
+  AdminHosts,
+  AdminInstitutions,
+  AdminListings,
+  AdminNotifications,
+  AdminPayments,
+  AdminPayouts,
+  AdminPromotions,
+  AdminReports,
+  AdminReviews,
+  AdminSettings,
+  AdminStudents,
+  AdminSupport,
+  AdminUsers,
+  AdminVerification
+} from './pages/admin/AdminPages';
 export function App() {
   return (
     <BrowserRouter>
@@ -35,6 +60,7 @@ export function App() {
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/signup" element={<Signup />} />
         <Route path="/auth/verify-email" element={<EmailVerificationResult />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
 
         {/* Student App Routes (Mobile Shell) */}
         <Route
@@ -69,15 +95,37 @@ export function App() {
           <Route index element={<HostOverview />} />
         </Route>
 
-        {/* Admin Dashboard Routes (Dashboard Shell) */}
+        {/* Admin Dashboard Routes */}
         <Route
           path="/admin"
           element={
-          <AuthGuard allowedRoles={['admin']}>
-              <DashboardShell role="admin" />
+          <AuthGuard allowedRoles={['admin']} redirectTo="/admin/login">
+              <AdminDataProvider>
+                <AdminLayout />
+              </AdminDataProvider>
             </AuthGuard>
           }>
-          <Route index element={<AdminOverview />} />
+          <Route index element={<AdminDashboard />} />
+          <Route path="users" element={<AdminUsers />} />
+          <Route path="students" element={<AdminStudents />} />
+          <Route path="hosts" element={<AdminHosts />} />
+          <Route path="listings" element={<AdminListings />} />
+          <Route path="bookings" element={<AdminBookings />} />
+          <Route path="payments" element={<AdminPayments />} />
+          <Route path="payouts" element={<AdminPayouts />} />
+          <Route path="reviews" element={<AdminReviews />} />
+          <Route path="documents" element={<AdminDocuments />} />
+          <Route path="verification" element={<AdminVerification />} />
+          <Route path="support" element={<AdminSupport />} />
+          <Route path="reports" element={<AdminReports />} />
+          <Route path="promotions" element={<AdminPromotions />} />
+          <Route path="institutions" element={<AdminInstitutions />} />
+          <Route path="notifications" element={<AdminNotifications />} />
+          <Route path="content" element={<AdminContent />} />
+          <Route path="analytics" element={<AdminAnalytics />} />
+          <Route path="settings" element={<AdminSettings />} />
+          <Route path="audit-logs" element={<AdminAuditLogs />} />
+          <Route path="*" element={<AdminFallback />} />
         </Route>
       </Routes>
     </BrowserRouter>);

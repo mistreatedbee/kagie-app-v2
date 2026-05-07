@@ -9,9 +9,10 @@ import {
 interface AuthGuardProps {
   allowedRoles: KagieRole[];
   children: React.ReactNode;
+  redirectTo?: string;
 }
 
-export function AuthGuard({ allowedRoles, children }: AuthGuardProps) {
+export function AuthGuard({ allowedRoles, children, redirectTo = '/auth/role' }: AuthGuardProps) {
   const location = useLocation();
   const [state, setState] = useState<{
     isLoading: boolean;
@@ -61,11 +62,11 @@ export function AuthGuard({ allowedRoles, children }: AuthGuardProps) {
   }
 
   if (!state.isSignedIn) {
-    return <Navigate to="/auth/role" replace state={{ from: location.pathname }} />;
+    return <Navigate to={redirectTo} replace state={{ from: location.pathname }} />;
   }
 
   if (!state.role) {
-    return <Navigate to="/auth/role" replace />;
+    return <Navigate to={redirectTo} replace />;
   }
 
   if (!allowedRoles.includes(state.role)) {
