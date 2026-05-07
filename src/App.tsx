@@ -10,6 +10,7 @@ import { Onboarding } from './pages/student/Onboarding';
 import { RoleSelection } from './pages/auth/RoleSelection';
 import { Login } from './pages/auth/Login';
 import { Signup } from './pages/auth/Signup';
+import { EmailVerificationResult } from './pages/auth/EmailVerificationResult';
 import { Home } from './pages/student/Home';
 import { Listings } from './pages/student/Listings';
 import { ListingDetail } from './pages/student/ListingDetail';
@@ -32,6 +33,7 @@ export function App() {
         <Route path="/auth/role" element={<RoleSelection />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/signup" element={<Signup />} />
+        <Route path="/auth/verify-email" element={<EmailVerificationResult />} />
 
         {/* Student App Routes (Mobile Shell) */}
         <Route

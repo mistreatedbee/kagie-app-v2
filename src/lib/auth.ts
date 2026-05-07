@@ -207,7 +207,7 @@ export const signUpWithEmail = async (
   storeSignupRole(email, role);
   storePendingAuthRedirectRole(role);
 
-  const redirectTo = `${window.location.origin}/auth/login`;
+  const redirectTo = `${window.location.origin}/auth/verify-email`;
   const { data, error } = await insforge.auth.signUp({
     name,
     email,
