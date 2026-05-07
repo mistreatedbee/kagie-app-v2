@@ -1,10 +1,18 @@
 import React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Home, Search, Heart, Calendar, User } from 'lucide-react';
+import { ArrowLeft, Home, Search, Heart, Calendar, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 export function MobileShell() {
   const location = useLocation();
   const navigate = useNavigate();
+  const studentBackPaths = new Set([
+    '/home',
+    '/listings',
+    '/profile',
+    '/bookings',
+    '/booking-confirmation'
+  ]);
+  const showBackButton = studentBackPaths.has(location.pathname);
   // Don't show bottom nav on certain screens like listing detail or booking flow
   const hideBottomNav =
   location.pathname.includes('/listing/') ||
@@ -35,12 +43,33 @@ export function MobileShell() {
     label: 'Profile',
     path: '/profile'
   }];
+  const handleBack = () => {
+    if (location.key !== 'default') {
+      navigate(-1);
+      return;
+    }
+
+    navigate('/home', { replace: true });
+  };
 
   return (
     <div className="min-h-screen bg-background">
       <div className="w-full bg-background min-h-screen relative flex flex-col">
         {/* Main Content Area */}
         <main className="flex-1 min-w-0 pb-24 lg:pb-28">
+          {showBackButton &&
+          <div className="border-b border-border bg-white/90 px-4 py-2 backdrop-blur-sm sm:px-6">
+              <div className="mx-auto flex max-w-7xl items-center">
+                <button
+                type="button"
+                onClick={handleBack}
+                className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-dark transition-colors hover:bg-gray-50">
+                  <ArrowLeft size={18} />
+                  Back
+                </button>
+              </div>
+            </div>
+          }
           <Outlet />
         </main>
 

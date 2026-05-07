@@ -13,7 +13,8 @@ import {
   LogOut,
   Bell,
   Search,
-  Menu } from
+  Menu,
+  ArrowLeft } from
 'lucide-react';
 import { Logo } from '../common/Logo';
 import {
@@ -114,6 +115,14 @@ export function DashboardShell({ role }: DashboardShellProps) {
     await signOut();
     navigate('/auth/role', { replace: true });
   };
+  const handleBack = () => {
+    if (location.key !== 'default') {
+      navigate(-1);
+      return;
+    }
+
+    navigate(`/${role}`, { replace: true });
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -195,6 +204,14 @@ export function DashboardShell({ role }: DashboardShellProps) {
         {/* Topbar */}
         <header className="h-16 bg-white border-b border-border px-4 sm:px-6 flex items-center justify-between sticky top-0 z-30">
           <div className="flex min-w-0 items-center gap-3 sm:gap-4">
+            <button
+              type="button"
+              onClick={handleBack}
+              className="p-2 text-gray-500 hover:bg-gray-100 rounded-lg transition-colors"
+              aria-label="Go back">
+              <ArrowLeft size={20} />
+            </button>
+
             <button
               onClick={() => {
                 if (window.innerWidth < 1024) {
