@@ -19,6 +19,7 @@ import { BookingFlow } from './pages/student/BookingFlow';
 import { BookingConfirmation } from './pages/student/BookingConfirmation';
 import { Profile } from './pages/student/Profile';
 import { Bookings } from './pages/student/Bookings';
+import { Saved } from './pages/student/Saved';
 import { HostOverview } from './pages/host/HostOverview';
 import { AdminOverview } from './pages/admin/AdminOverview';
 export function App() {
@@ -53,6 +54,7 @@ export function App() {
           
           <Route path="/profile" element={<Profile />} />
           <Route path="/bookings" element={<Bookings />} />
+          <Route path="/saved" element={<Saved />} />
           {/* Add more student routes here */}
         </Route>
 

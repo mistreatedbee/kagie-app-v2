@@ -8,6 +8,7 @@ export function MobileShell() {
   const studentBackPaths = new Set([
     '/home',
     '/listings',
+    '/saved',
     '/profile',
     '/bookings',
     '/booking-confirmation'
